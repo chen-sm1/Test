@@ -92,10 +92,94 @@ def sortcard(n):                #卡牌排序
             n.remove(x)
             n.append(x)
             
-    print(n,end='\n\n')
+    return n
 
-sortcard(player1_display)       #按顺序打印三个玩家的卡牌
-sortcard(player2_display)
-sortcard(player3_display)
-
+player1_display=sortcard(player1_display)       #将player1,2,3分别进行排序
+player2_display=sortcard(player2_display)
+player3_display=sortcard(player3_display)
+print(player1_display,player2_display,player3_display,sep='\n\n')
 print(len(player1_display),len(player2_display),len(player3_display))       #打印三个玩家的卡牌数
+
+def playcard(n):                                #定义函数playcard(n),若输入的卡牌位于n中，将n中这些卡牌删除
+    out=[]                                      #用out列表存储成功输入的卡牌
+    for x in outcard:                           #遍历输入的卡牌
+        for i in n:                             #遍历n
+            if x==i[0]:
+                out.append(i)
+                n.remove(i)
+                break
+            if x=='kingbig':
+                if ('king','big') in n:
+                    out.append(('king','big'))
+                    n.remove(('king','big'))
+            if x=='kingsmall':
+                if ('king','small') in n:
+                    out.append(('king','small'))
+                    n.remove(('king','small'))
+    print(out,end='\n\n')                       #打印打出的牌
+    print(n,end='\n\n')                         #打印剩余的牌
+    print(len(out),len(n))
+
+if dizhu==2:                                    #分情况处理不同地主时的情况
+    print('player2是地主')
+    print('player2出牌 ')
+    outcard=[]                                  #outcard存储所有输入的卡牌
+    while 1:
+        a=input('请出牌： ')
+        outcard.append(a)
+        if a=='end':                            #输入end时退出循环
+            break
+    playcard(player2_display)                   #打印出成功打出的卡牌及player2剩余的卡牌
+    print('player3出牌 ')                       #同上
+    outcard=[]
+    while 1:
+        a=input('请出牌： ')
+        outcard.append(a)
+        if a=='end':
+            break
+    playcard(player3_display)
+
+if dizhu==3:
+    print('player3是地主')
+    print('player3出牌: ')
+    outcard=[]
+    while 1:
+        a=input('请出牌： ')
+        outcard.append(a)
+        if a=='end':
+            break
+    playcard(player3_display)
+
+if dizhu==1:
+    print('player1是地主')
+
+while 1:                                        #定义出牌顺序，按player1-player2-player3的顺序出牌          
+    for pointer in range(1,4):                  #通过改变pointer的值来轮换到下一个玩家
+        if pointer==1:
+            print('player1出牌 ')
+            outcard=[]                          #outcard存储所有输入的卡牌
+            while 1:
+                a=input('请出牌： ')
+                outcard.append(a)
+                if a=='end':                    #输入end时退出循环
+                    break
+            playcard(player1_display)           #打印出成功打出的卡牌及player2剩余的卡牌
+        if pointer==2:
+            print('player2出牌 ')
+            outcard=[]
+            while 1:
+                a=input('请出牌： ')
+                outcard.append(a)
+                if a=='end':
+                    break
+            playcard(player2_display)
+        if pointer==3:
+            print('player3出牌 ')
+            outcard=[]
+            while 1:
+                a=input('请出牌： ')
+                outcard.append(a)
+                if a=='end':
+                    break
+            playcard(player2_display)    
+            
