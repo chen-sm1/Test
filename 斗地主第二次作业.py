@@ -465,7 +465,7 @@ def check(m):                           #检查m是否符合卡牌规则. 若符
             m=sortcard3(m)
             return 0,m
 
-passcard=0                                      #用passcard记录过牌的次数，passcard能被2整除时，玩家可自由出牌
+passcard=1                                      #用passcard记录过牌的次数，passcard能被2整除时，玩家可自由出牌
 if dizhu==1:                                    #分情况处理不同地主时的情况
     print('player1是地主')
     print('player1出牌 ')
@@ -483,7 +483,7 @@ if dizhu==1:                                    #分情况处理不同地主时�
                 for x in player1_out:
                     player1_display.append(x)   #将成功打出的卡牌重新加入player2_display
                 print('player1的牌')
-                print(player1_display)
+                print(show(player1_display))
                 outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                 continue
             else:
@@ -492,6 +492,7 @@ if dizhu==1:                                    #分情况处理不同地主时�
     print('player2出牌 ')                       #同上
     print('player2卡牌',show(player2_display),sep='\n',end='\n\n')
     outcard=[]
+    player2_pass=0                              #记录该player有无'pass'
     while 1:
         a=input('请出牌： ')
         outcard.append(a)
@@ -504,7 +505,7 @@ if dizhu==1:                                    #分情况处理不同地主时�
                 for x in player2_out:
                     player2_display.append(x)
                 print('player2的牌')
-                print(player2_display)
+                print(show(player2_display))
                 outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                 continue
             else:
@@ -514,7 +515,7 @@ if dizhu==1:                                    #分情况处理不同地主时�
                     for x in player2_out:
                         player2_display.append(x)
                     print('player2的牌')
-                    print(player2_display)
+                    print(show(player2_display))
                     outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                     continue
                 else:
@@ -522,11 +523,13 @@ if dizhu==1:                                    #分情况处理不同地主时�
         if a=='pass':
             player2_out=player1_out
             passcard+=1                                 #pass计数加一
+            player2_pass=1                              #若该玩家有'pass',player_pass为1
             break
 
     print('player3出牌 ')                       #同上
     print('player3卡牌',show(player3_display),sep='\n',end='\n\n')
     outcard=[]
+    player3_pass=0                              #记录该player有无'pass'
     while 1:
         a=input('请出牌： ')
         outcard.append(a)
@@ -539,7 +542,7 @@ if dizhu==1:                                    #分情况处理不同地主时�
                 for x in player3_out:
                     player3_display.append(x)
                 print('player3的牌')
-                print(player3_display)
+                print(show(player3_display))
                 outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                 continue
             else:
@@ -549,14 +552,16 @@ if dizhu==1:                                    #分情况处理不同地主时�
                     for x in player3_out:
                         player3_display.append(x)
                     print('player3的牌')
-                    print(player3_display)
+                    print(show(player3_display))
                     outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                     continue
                 else:
                     break
         if a=='pass':
             player3_out=player2_out
-            passcard+=1
+            player3_pass=1                          #若该玩家有'pass',player_pass为1
+            if player2_pass==1 or passcard==1:      #若上一个玩家有'pass'或者该玩家为第一个'pass'，passcard+1
+                passcard+=1
             break
 
 if dizhu==2:                                    #分情况处理不同地主时的情况
@@ -576,7 +581,7 @@ if dizhu==2:                                    #分情况处理不同地主时�
                 for x in player2_out:
                     player2_display.append(x)   #将成功打出的卡牌重新加入player2_display
                 print('player2的牌')
-                print(player2_display)
+                print(show(player2_display))
                 outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                 continue
             else:
@@ -585,6 +590,7 @@ if dizhu==2:                                    #分情况处理不同地主时�
     print('player3出牌 ')                       #同上
     print('player3卡牌',show(player3_display),sep='\n',end='\n\n')
     outcard=[]
+    player3_pass=0                              #记录该player有无'pass'
     while 1:
         a=input('请出牌： ')
         outcard.append(a)
@@ -597,7 +603,7 @@ if dizhu==2:                                    #分情况处理不同地主时�
                 for x in player3_out:
                     player3_display.append(x)
                 print('player3的牌')
-                print(player3_display)
+                print(show(player3_display))
                 outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                 continue
             else:
@@ -607,13 +613,14 @@ if dizhu==2:                                    #分情况处理不同地主时�
                     for x in player3_out:
                         player3_display.append(x)
                     print('player3的牌')
-                    print(player3_display)
+                    print(show(player3_display))
                     outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                     continue
                 else:
                     break
         if a=='pass':
             player3_out=player2_out
+            player3_pass=1                          #若该玩家有'pass',player_pass为1
             passcard+=1
             break
 
@@ -622,6 +629,7 @@ if dizhu==3:
     print('player3出牌 ')                       #同上
     print('player3卡牌',show(player3_display),sep='\n',end='\n\n')
     outcard=[]
+    player3_pass=0                                  #记录该player有无'pass'
     while 1:
         a=input('请出牌： ')
         outcard.append(a)
@@ -634,7 +642,7 @@ if dizhu==3:
                 for x in player3_out:
                     player3_display.append(x)
                 print('player3的牌')
-                print(player3_display)
+                print(show(player3_display))
                 outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                 continue
             else:
@@ -678,8 +686,10 @@ while 1:                                        #定义出牌顺序，按player1
             print('player1卡牌',show(player1_display),sep='\n',end='\n\n')
             print('player1出牌 ')                       
             outcard=[]
-            if passcard%2==0:
+            player1_pass=0                      #记录该player有无'pass'
+            if passcard%3==0:
                 player3_out=['pass']
+                passcard=1
             while 1:
                 a=input('请出牌： ')
                 outcard.append(a)
@@ -692,7 +702,7 @@ while 1:                                        #定义出牌顺序，按player1
                         for x in player1_out:
                             player1_display.append(x)
                         print('player1的牌')
-                        print(player1_display)
+                        print(show(player1_display))
                         outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                         continue
                     else:
@@ -702,21 +712,25 @@ while 1:                                        #定义出牌顺序，按player1
                             for x in player1_out:
                                 player1_display.append(x)
                             print('player1的牌')
-                            print(player1_display)
+                            print(show(player1_display))
                             outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                             continue
                         else:
                             break
                 if a=='pass':
                     player1_out=player3_out
-                    passcard+=1
+                    player1_pass=1                          #若该玩家有'pass',player_pass为1
+                    if player3_pass==1 or passcard==1:
+                        passcard+=1
                     break    
         if pointer==2:
             print('player2卡牌',show(player2_display),sep='\n',end='\n\n')
             print('player2出牌 ')                       
             outcard=[]
-            if passcard%2==0:
-                player1_out=['pass']    
+            player2_pass=0                                  #记录该player有无'pass'
+            if passcard%3==0:
+                player1_out=['pass']
+                passcard=1    
             while 1:
                 a=input('请出牌： ')
                 outcard.append(a)
@@ -729,7 +743,7 @@ while 1:                                        #定义出牌顺序，按player1
                         for x in player2_out:
                             player2_display.append(x)
                         print('player2的牌')
-                        print(player2_display)
+                        print(show(player2_display))
                         outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                         continue
                     else:
@@ -739,21 +753,25 @@ while 1:                                        #定义出牌顺序，按player1
                             for x in player2_out:
                                 player2_display.append(x)
                             print('player2的牌')
-                            print(player2_display)
+                            print(show(player2_display))
                             outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                             continue
                         else:
                             break
                 if a=='pass':
                     player2_out=player1_out
-                    passcard+=1
+                    player2_pass=1
+                    if player1_pass==1 or passcard==1:
+                        passcard+=1
                     break    
         if pointer==3:
             print('player3卡牌',show(player3_display),sep='\n',end='\n\n')
             print('player3出牌 ')                       #同上
             outcard=[]
-            if passcard%2==0:
+            player3_pass=0
+            if passcard%3==0:
                 player2_out=['pass']
+                passcard=1
             while 1:
                 a=input('请出牌： ')
                 outcard.append(a)
@@ -766,7 +784,7 @@ while 1:                                        #定义出牌顺序，按player1
                         for x in player3_out:
                             player3_display.append(x)
                         print('player3的牌')
-                        print(player3_display)
+                        print(show(player3_display))
                         outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                         continue
                     else:
@@ -776,14 +794,16 @@ while 1:                                        #定义出牌顺序，按player1
                             for x in player3_out:
                                 player3_display.append(x)
                             print('player3的牌')
-                            print(player3_display)
+                            print(show(player3_display))
                             outcard=[]                      #此处要将outcard清空，不然重新输入时会加上前一次的输入
                             continue
                         else:
                             break
                 if a=='pass':
                     player3_out=player2_out
-                    passcard+=1
+                    player3_pass=1
+                    if player2_pass==1 or passcard==1:
+                        passcard+=1
                     break
     
 
